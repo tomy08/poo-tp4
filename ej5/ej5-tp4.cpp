@@ -1,0 +1,69 @@
+/*
+Guardar Los cambios en un archivo con nombre pertinente sin modificar el original
+y pudiendo tener acceso a los mismos
+*/
+#include <iostream>
+#include <fstream>
+#include <vector>
+#include <string>
+
+using namespace std;
+
+int main() {
+    string archivoOriginal, archivoNuevo;
+    vector<string> lineas;
+
+    cout << "Nombre del archivo original (.txt): ";
+    getline(cin, archivoOriginal);
+
+
+    ifstream entrada(archivoOriginal);
+    if (!entrada) {
+        cout << "No se pudo abrir el archivo.\n";
+        return 1;
+    }
+
+    string linea;
+    while (getline(entrada, linea)) {
+        lineas.push_back(linea);
+    }
+    entrada.close();
+
+    cout << "\nContenido del archivo:\n";
+    for (size_t i = 0; i < lineas.size(); ++i) {
+        cout << i + 1 << ": " << lineas[i] << '\n';
+    }
+
+    int numLinea;
+    cout << "\nIngrese el numero de línea a modificar: ";
+    cin >> numLinea;
+    cin.ignore();
+
+    if (numLinea < 1 || numLinea > static_cast<int>(lineas.size())) {
+        cout << "Numero de linea invalido.\n";
+        return 1;
+    }
+
+    string nuevoTexto;
+    cout << "Nuevo texto: ";
+    getline(cin, nuevoTexto);
+    lineas[numLinea - 1] = nuevoTexto;
+
+
+    cout << "Nombre del nuevo archivo para guardar los cambios: ";
+    getline(cin, archivoNuevo);
+
+    ofstream salida(archivoNuevo);
+    if (!salida) {
+        cout << "No se pudo crear el archivo.\n";
+        return 1;
+    }
+
+    for (const auto& l : lineas) {
+        salida << l << '\n';
+    }
+
+    cout << "Archivo guardado como: " << archivoNuevo << endl;
+
+    return 0;
+}
