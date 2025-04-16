@@ -16,7 +16,6 @@ int main() {
     cout << "Nombre del archivo original (.txt): ";
     getline(cin, archivoOriginal);
 
-
     ifstream entrada(archivoOriginal);
     if (!entrada) {
         cout << "No se pudo abrir el archivo.\n";
@@ -29,28 +28,36 @@ int main() {
     }
     entrada.close();
 
-    cout << "\nContenido del archivo:\n";
-    for (size_t i = 0; i < lineas.size(); ++i) {
-        cout << i + 1 << ": " << lineas[i] << '\n';
+    bool continuar = true;
+    while (continuar) {
+        cout << "\nContenido actual del archivo:\n";
+        for (size_t i = 0; i < lineas.size(); ++i) {
+            cout << i + 1 << ": " << lineas[i] << '\n';
+        }
+
+        int numLinea;
+        cout << "\nIngrese el número de línea a modificar: ";
+        cin >> numLinea;
+        cin.ignore();
+
+        if (numLinea < 1 || numLinea > lineas.size()) {
+            cout << "Número de línea inválido.\n";
+        } else {
+            string nuevoTexto;
+            cout << "Nuevo texto para la línea " << numLinea << ": ";
+            getline(cin, nuevoTexto);
+            lineas[numLinea - 1] = nuevoTexto;
+        }
+
+        string respuesta;
+        cout << "\n¿Desea modificar otra línea? (s/n): ";
+        getline(cin, respuesta);
+        if (respuesta != "s" && respuesta != "S") {
+            continuar = false;
+        }
     }
 
-    int numLinea;
-    cout << "\nIngrese el numero de línea a modificar: ";
-    cin >> numLinea;
-    cin.ignore();
-
-    if (numLinea < 1 || numLinea > static_cast<int>(lineas.size())) {
-        cout << "Numero de linea invalido.\n";
-        return 1;
-    }
-
-    string nuevoTexto;
-    cout << "Nuevo texto: ";
-    getline(cin, nuevoTexto);
-    lineas[numLinea - 1] = nuevoTexto;
-
-
-    cout << "Nombre del nuevo archivo para guardar los cambios: ";
+    cout << "\nNombre del nuevo archivo para guardar los cambios: ";
     getline(cin, archivoNuevo);
 
     ofstream salida(archivoNuevo);
