@@ -79,7 +79,7 @@ int main() {
                 cout << "Ingrese DNI: ";
                 cin >> persona.dni;
                 personas.push_back(persona);
-                guardarDatos(personas);
+                guardarDatos({persona});
                 break;
             }
             case 2: {
