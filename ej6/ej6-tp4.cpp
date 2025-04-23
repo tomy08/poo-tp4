@@ -106,7 +106,7 @@ int main() {
                 cout << "Ingrese puntaje: ";
                 cin >> jugador.puntaje;
                 jugadores.push_back(jugador);
-                guardarDatos(jugadores);
+                guardarDatos({jugador});
                 break;
             }
             case 2:
