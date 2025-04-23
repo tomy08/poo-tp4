@@ -143,7 +143,7 @@ int main() {
 
                 if (validarDNI(persona.dni) && validarNombreYApellido(persona.nombre, persona.apellido)) {
                     personas.push_back(persona);
-                    guardarDatos(personas);
+                    guardarDatos({persona});
                     cout << "Persona guardada exitosamente." << endl;
                 } else {
                     cout << "El DNI o el Nombre y Apellido ya existen." << endl;
